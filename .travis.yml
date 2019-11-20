@@ -8,5 +8,6 @@ cache: npm
 
 script:
   - cd neutralino.js
+  - npm install
   - npm test
   
