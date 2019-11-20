@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.15)
+cmake_minimum_required (VERSION 3.10)
 project(NeutralinoJS)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -35,11 +35,11 @@ else() # valid for MinGW also
     list(APPEND LINK_LIBS ${PTHREAD})
 endif()
 
-file(GLOB SOURCES src/*.cc)
+file(GLOB SOURCES cmake-utils/*.cc)
 add_executable(neutralino ${SOURCES})
 target_include_directories(neutralino PUBLIC thirdparty)
 
-add_subdirectory(src/io/fs)
+add_subdirectory(cmake-utils/io/fs)
 target_link_libraries(neutralino fs)
 
 target_compile_options(neutralino PUBLIC ${FRAMEWORK_FLAG})
