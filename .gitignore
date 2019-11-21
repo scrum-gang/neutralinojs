@@ -6,3 +6,5 @@ Thumbs.db
 dist/neutralino
 dist/*.exe
 
+# CMake output directory
+build
