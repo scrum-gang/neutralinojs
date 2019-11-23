@@ -10,4 +10,5 @@ script:
   - cd neutralino.js
   - npm install
   - npm test
-  
+  - docker build . -t test
+  - docker run test
