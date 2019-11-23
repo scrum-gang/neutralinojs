@@ -4,6 +4,9 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
 
 #include "NFile.h"
 
