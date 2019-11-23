@@ -1,5 +1,11 @@
 language: node_js
 
+services:
+  - docker
+
+before_install:
+  - docker build /home/travis/build/scrum-gang/neutralinojs/ -t test
+
 node_js:
   - lts/*
   - node
@@ -10,5 +16,4 @@ script:
   - cd neutralino.js
   - npm install
   - npm test
-  - docker build . -t test
   - docker run test
