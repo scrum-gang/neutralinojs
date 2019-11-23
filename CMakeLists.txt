@@ -36,6 +36,7 @@ else() # valid for MinGW also
 endif()
 
 file(GLOB SOURCES cmake-utils/*.cc)
+
 add_executable(neutralino ${SOURCES})
 target_include_directories(neutralino PUBLIC thirdparty)
 
