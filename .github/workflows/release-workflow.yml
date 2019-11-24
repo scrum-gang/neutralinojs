@@ -14,7 +14,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
       - name: Build project # This would actually build your project, using zip for an example artifact
-        uses:
         run: |
           docker build . -t neutralinojs:test-build
           mkdir build
