@@ -34,6 +34,8 @@ else()
     include_directories(${GTK3_INCLUDE_DIRS} ${WEBKIT2GTK_INCLUDE_DIRS})
     link_directories(${GTK3_LIBRARY_DIRS})
 
+    file(GLOB SOURCES2 "core-shared/*.cpp" "core-linux/src/*.cpp")
+
     # Add other flags to the compiler
     add_definitions(${GTK3_CFLAGS_OTHER})
     set(FRAMEWORK_FLAG -DWEBVIEW_GTK=1)
@@ -67,6 +69,19 @@ if(APPLE)
     target_link_libraries(neutralino ping)
     target_link_libraries(neutralino cloud)
     target_link_libraries(neutralino fd)
+elseif(WIN32)
+else()
+    target_include_directories(neutralino PUBLIC core-linux/lib)
+
+    add_subdirectory(core-linux/src/core)
+    add_subdirectory(core-linux/src/auth)
+    add_subdirectory(core-linux/src/ping)
+    add_subdirectory(core-linux/src/cloud)
+
+    target_link_libraries(neutralino core)
+    target_link_libraries(neutralino auth)
+    target_link_libraries(neutralino ping)
+    target_link_libraries(neutralino cloud)
 endif()
 
 target_link_libraries(neutralino ${GTK3_LIBRARIES})

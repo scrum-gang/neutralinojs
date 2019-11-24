@@ -3,8 +3,6 @@
 std::mutex log::_mutex;
 std::atomic<bool> log::_log_to_file (true);
 std::atomic<bool> log::_log_to_stdout (true);
-std::experimental::filesystem::path log::_logfile_path
-    (std::experimental::filesystem::current_path() / "neutralinojs.log");
 
 log::log() :  _lock_guard (_mutex)
 {
