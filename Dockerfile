@@ -20,5 +20,5 @@ CMD make
 #RUN add-apt-repository --remove ppa:webkit-team/ppa -y
 #RUN apt-get --allow-unauthenticated update 
 #RUN apt-get install -y libwebkit2gtk-4.0-37 libwebkit2gtk-4.0-dev
-RUN cmake --version
+#RUN cmake --version
 
