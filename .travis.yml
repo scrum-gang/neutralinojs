@@ -17,5 +17,5 @@ script:
   - npm install
   - npm test
   - mkdir build
-  - docker run `pwd`/build:/neutralinojs/build neutralinojs:test-build
+  - docker run -v `pwd`/build:/neutralinojs/build neutralinojs:test-build
   - docker ps -a
