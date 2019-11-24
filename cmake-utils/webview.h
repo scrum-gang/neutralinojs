@@ -6,21 +6,26 @@
 #include <serge/webview.h>
 #include <string>
 
+#define OBJC_OLD_DISPATCH_PROTOTYPES 1 // catalina fix
+
 using namespace std;
 
-namespace neut {
+namespace neut
+{
 
 typedef struct webview *wv;
 typedef webview_dispatch_fn DispatcherFn;
 typedef webview_external_invoke_cb_t CallbackFn;
 
-enum class DialogType {
+enum class DialogType
+{
   AlertDialog,
   OpenDialog,
   SaveDialog,
 };
 
-class WebView {
+class WebView
+{
 private:
   struct webview _webview = {};
   int blocking = 0;
@@ -48,42 +53,51 @@ public:
 
 inline void WebView::setBlocking(int blocking) { blocking = blocking; }
 
-inline void WebView::terminate() {
+inline void WebView::terminate()
+{
   running = 0;
   webview_terminate(&_webview);
 }
 
-inline void WebView::exit() {
+inline void WebView::exit()
+{
   running = 0;
   webview_exit(&_webview);
 }
 
-inline int WebView::evalJS(const string js) {
+inline int WebView::evalJS(const string js)
+{
   return webview_eval(&_webview, js.c_str());
 }
 
-inline int WebView::injectCSS(const string css) {
+inline int WebView::injectCSS(const string css)
+{
   return webview_inject_css(&_webview, css.c_str());
 }
 
-inline void WebView::setTitle(const string title) {
+inline void WebView::setTitle(const string title)
+{
   webview_set_title(&_webview, title.c_str());
 }
 
-inline void WebView::setFullscreen(int fullscreen) {
+inline void WebView::setFullscreen(int fullscreen)
+{
   fullscreen = fullscreen;
   webview_set_fullscreen(&_webview, fullscreen);
 }
 
-inline void WebView::setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
+inline void WebView::setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+{
   webview_set_color(&_webview, r, g, b, a);
 }
 
-inline void WebView::dispatch(DispatcherFn fn, void *args) {
+inline void WebView::dispatch(DispatcherFn fn, void *args)
+{
   webview_dispatch(&_webview, fn, args);
 }
 
-inline void WebView::setCallBack(CallbackFn fn){
+inline void WebView::setCallBack(CallbackFn fn)
+{
   _webview.external_invoke_cb = fn;
 }
 

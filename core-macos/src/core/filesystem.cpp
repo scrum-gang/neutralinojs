@@ -11,7 +11,7 @@
 using namespace std;
 using json = nlohmann::json;
 
-namespace filesystem {
+namespace neut::filesystem {
     string createDirectory(string jso) {
         json input;
         json output;

@@ -27,32 +27,30 @@
 
 using namespace std;
 
-namespace filesystem {
-    string createDirectory(string jso);
-    
-    string removeDirectory(string jso);
+namespace neut::filesystem 
+{
+string createDirectory(string jso);
 
-    string writeFile(string jso);
+string removeDirectory(string jso);
 
-    string readFile(string jso);
+string writeFile(string jso);
 
-    string removeFile(string jso);
+string readFile(string jso);
 
-    string readDirectory(string jso);
+string removeFile(string jso);
 
-    typedef string (*pfunc)(string);
+string readDirectory(string jso);
 
-    static map <string, pfunc> funcmap = {
-        {"filesystem.createDirectory", filesystem::createDirectory},
-        {"filesystem.removeDirectory", filesystem::removeDirectory},
-        {"filesystem.readFile", filesystem::readFile},
-        {"filesystem.writeFile", filesystem::writeFile},
-        {"filesystem.removeFile", filesystem::removeFile},
-        {"filesystem.readDirectory", filesystem::readDirectory}
-    };
+typedef string (*pfunc)(string);
 
+static map<string, pfunc> funcmap = {
+    {"filesystem.createDirectory", createDirectory},
+    {"filesystem.removeDirectory", removeDirectory},
+    {"filesystem.readFile", readFile},
+    {"filesystem.writeFile", writeFile},
+    {"filesystem.removeFile", removeFile},
+    {"filesystem.readDirectory", readDirectory}};
 
-
-}
+} // namespace ffilesystem
 
 #endif
