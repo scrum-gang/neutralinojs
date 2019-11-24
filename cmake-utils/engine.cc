@@ -19,6 +19,7 @@ using namespace neut;
 Engine::Engine() {}
 
 string Engine::getResourceRoot() {
+  string _resourceRoot = "";
   if(!_resourceRoot.empty()) { return _resourceRoot; }
 
   char ppath[PATH_MAX];
@@ -40,7 +41,7 @@ string Engine::getResourceRoot() {
   ppath[sz + 1] = '\0';
   string realpath(ppath);
   size_t loc = realpath.find_last_of("/");
-  _resourceRoot = realpath.substr(0, loc) + "\";
+  _resourceRoot = realpath.substr(0, loc) + "/";
 #endif
 // get executable location in win32
 #ifdef WIN32
