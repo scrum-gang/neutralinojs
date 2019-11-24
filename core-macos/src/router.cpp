@@ -40,7 +40,7 @@
 #include "cloud/previleges.h"
 
 using namespace std;
-using namespace filesystem;
+using namespace neut::filesystem;
 using json = nlohmann::json;
 
 namespace routes {
@@ -103,8 +103,8 @@ namespace routes {
 
                     if(permission) {
 
-                        if(filesystem::funcmap.find(modfunc) != filesystem::funcmap.end() ){
-                            pfunc f = filesystem::funcmap[modfunc];
+                        if(neut::filesystem::funcmap.find(modfunc) != neut::filesystem::funcmap.end() ){
+                            pfunc f = neut::filesystem::funcmap[modfunc];
                             output = (*f)(j); 
                         }
                         else if(os::funcmap.find(modfunc) != os::funcmap.end() ){
