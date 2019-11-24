@@ -2,9 +2,7 @@ FROM andreiungur/ecse437:cmake-base2
 
 WORKDIR /neutralinojs
 COPY . /neutralinojs
-RUN mkdir build
-RUN cd build && cmake -DCMAKE_C_COMPILER=/usr/bin/gcc-8 -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 /neutralinojs
-CMD cd build && make
+CMD cd build && cmake -DCMAKE_C_COMPILER=/usr/bin/gcc-8 -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 /neutralinojs && make
 
 # Sets up base docker image
 #FROM ubuntu:bionic
