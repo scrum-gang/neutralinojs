@@ -7,19 +7,31 @@ on:
 name: Upload Release Asset
 
 jobs:
-  linuxjob:
+  release:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
     name: Upload Release Asset (Linux)
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
         uses: actions/checkout@master
-      - name: Build project # This would actually build your project, using zip for an example artifact
+      - name: Build project on Ubuntu # This would actually build your project, using zip for an example artifact
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           docker build . -t neutralinojs:test-build
           mkdir build
           docker run -v `pwd`/build:/neutralinojs/build neutralinojs:test-build
           docker ps -a
-          cp -r ./dist ./build/dist && pushd ./build && zip -r ../neutralino-linux.zip neutralino ./dist && popd 
+          cp -r ./dist ./build/dist && pushd ./build && zip -r ../neutralino-ubuntu-latest.zip neutralino ./dist && popd
+      - name: Build project on macOS # This would actually build your project, using zip for an example artifact
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: |
+          mkdir build
+          pushd build
+          cmake ..
+          make
+          cp -r ../dist ./dist && zip -r ../neutralino-macos-latest.zip neutralino ./dist && popd
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1.0.0
@@ -30,13 +42,6 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-      - shell: bash
-        run: ${{ steps.create_release.outputs.upload_url }} > release-url.txt
-      - name: Upload Release URL for Job 1
-        uses: actions/upload-artifact@v1
-        with:
-          name: release-url
-          path: release-url.txt
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1.0.1
@@ -44,34 +49,34 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: ./neutralino-linux.zip
-          asset_name: neutralino-linux.zip
+          asset_path: ./neutralino-${{ matrix.os }}.zip
+          asset_name: neutralino-${{ matrix.os }}.zip
           asset_content_type: application/zip
-  darwinjob:
-    needs: linuxjob
-    name: Upload Release Asset (Darwin)
-    runs-on: macos-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@master
-      - name: Build project # This would actually build your project, using zip for an example artifact
-        run: |
-          mkdir build
-          pushd build
-          cmake ..
-          make
-          cp -r ../dist ./dist && zip -r ../neutralino-darwin.zip neutralino ./dist && popd
-      - name: Download Release URL for Job 2
-        uses: actions/download-artifact@v1
-        with:
-          name: release-url
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ jobs.linuxjob.steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: ./neutralino-darwin.zip
-          asset_name: neutralino-darwin.zip
-          asset_content_type: application/zip
+  # darwinjob:
+  #   needs: linuxjob
+  #   name: Upload Release Asset (Darwin)
+  #   runs-on: macos-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@master
+  #     - name: Build project # This would actually build your project, using zip for an example artifact
+  #       run: |
+  #         mkdir build
+  #         pushd build
+  #         cmake ..
+  #         make
+  #         cp -r ../dist ./dist && zip -r ../neutralino-darwin.zip neutralino ./dist && popd
+  #     - name: Download Release URL for Job 2
+  #       uses: actions/download-artifact@v1
+  #       with:
+  #         name: release-url
+  #     - name: Upload Release Asset
+  #       id: upload-release-asset
+  #       uses: actions/upload-release-asset@v1.0.1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         upload_url: ${{ jobs.linuxjob.steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+  #         asset_path: ./neutralino-darwin.zip
+  #         asset_name: neutralino-darwin.zip
+  #         asset_content_type: application/zip
