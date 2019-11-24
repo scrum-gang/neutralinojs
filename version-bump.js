@@ -3,7 +3,6 @@ const { exec } = require("child_process");
 const execPromise = promisify(exec);
 const fs = require("fs");
 
-let newVersion = "";
 const BUMP_TYPES = {
   Major: "major",
   Minor: "minor",
@@ -52,7 +51,6 @@ const BUMP_TYPES = {
       const newV = bumpVersion(oldVersion, bump);
 
       if (newV !== newVersion) {
-        console.log(newVersion.length);
         console.error(
           `Package versions in files do not match (${newV} and ${newVersion})`
         );
