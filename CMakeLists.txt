@@ -7,6 +7,19 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(LINK_LIBS "")
 
+# Use the package PkgConfig to detect GTK+ headers/library files
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+pkg_check_modules(WEBKIT2GTK REQUIRED webkit2gtk-4.0)
+
+# Setup CMake to use GTK+ and Webkit2GTK, tell the compiler where to 
+# look for headers and to the linker where to look for libraries
+include_directories(${GTK3_INCLUDE_DIRS} ${WEBKIT2GTK_INCLUDE_DIRS})
+link_directories(${GTK3_LIBRARY_DIRS})
+
+# Add other flags to the compiler
+add_definitions(${GTK3_CFLAGS_OTHER})
+
 # Platform Specific
 if(APPLE)
     message(STATUS "Apple Detected")
@@ -39,6 +52,9 @@ file(GLOB SOURCES cmake-utils/*.cc)
 
 add_executable(neutralino ${SOURCES})
 target_include_directories(neutralino PUBLIC thirdparty)
+
+target_link_libraries(neutralino ${GTK3_LIBRARIES})
+target_link_libraries(neutralino ${WEBKIT2GTK_LDFLAGS})
 
 add_subdirectory(cmake-utils/io/fs)
 target_link_libraries(neutralino fs)
