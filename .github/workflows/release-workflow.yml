@@ -23,7 +23,7 @@ jobs:
           mkdir build
           docker run -v `pwd`/build:/neutralinojs/build neutralinojs:test-build
           docker ps -a
-          cp -r ./dist ./build/dist && pushd ./build && zip -r ../neutralino-ubuntu-latest.zip neutralino ./dist && popd
+          cp -r ./dist/. ./build/ && pushd ./build && zip -r ../neutralino-ubuntu-latest.zip neutralino ./app ./storage && popd
       - name: Build project on macOS # This would actually build your project, using zip for an example artifact
         if: matrix.os == 'macos-latest'
         run: |
@@ -31,7 +31,7 @@ jobs:
           pushd build
           cmake ..
           make
-          cp -r ../dist ./dist && zip -r ../neutralino-macos-latest.zip neutralino ./dist && popd
+          cp -r ../dist/. . && zip -r ../neutralino-macos-latest.zip neutralino ./app ./storage && popd
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1.0.0
