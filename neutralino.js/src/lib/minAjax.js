@@ -23,7 +23,7 @@
 const authbasic = require('../auth/authbasic')
 
 function initXMLhttp () {
-  var xmlhttp
+  let xmlhttp
   if (window.XMLHttpRequest) {
     // code for IE7,firefox chrome and above
     xmlhttp = new XMLHttpRequest()
@@ -40,14 +40,15 @@ function ajax (config) {
     config.method = true
   }
 
-  var xmlhttp = initXMLhttp()
+  const xmlhttp = initXMLhttp()
+  let sendString
 
   xmlhttp.onreadystatechange = function () {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+    if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
       if (config.done) {
         config.done(JSON.parse(xmlhttp.responseText))
       }
-    } else if (xmlhttp.readyState == 4) {
+    } else if (xmlhttp.readyState === 4) {
       if (config.problem) {
         config.problem({
           message: 'An error occured while connecting with Neutralino server!'
@@ -56,17 +57,22 @@ function ajax (config) {
     }
   }
 
-  if (typeof config.data !== 'undefined') { sendString = JSON.stringify(config.data) }
+  if (typeof config.data !== 'undefined') {
+    sendString = JSON.stringify(config.data)
+  }
 
-  if (config.type == 'GET') {
+  if (config.type === 'GET') {
     xmlhttp.open('GET', config.url, config.method)
     xmlhttp.setRequestHeader('Authorization', 'Basic ' + authbasic.getToken())
     xmlhttp.send()
   }
 
-  if (config.type == 'POST') {
+  if (config.type === 'POST') {
     xmlhttp.open('POST', config.url, config.method)
-    xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+    xmlhttp.setRequestHeader(
+      'Content-type',
+      'application/x-www-form-urlencoded'
+    )
     xmlhttp.setRequestHeader('Authorization', 'Basic ' + authbasic.getToken())
     xmlhttp.send(sendString)
   }
