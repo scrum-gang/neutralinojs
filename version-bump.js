@@ -95,7 +95,7 @@ const BUMP_TYPES = {
 
   // commit and tag
   await execPromise(
-    `git add --all && git commit -m "v${newVersion}" && git tag v${newVersion}`
+    `git add --all && git commit -m "chore: Bump packages to v${newVersion}" && git tag v${newVersion}`
   );
 })();
 
