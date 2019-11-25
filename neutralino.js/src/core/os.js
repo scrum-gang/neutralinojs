@@ -20,86 +20,79 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-let $ = require('../lib/minAjax.js');
+const $ = require('../lib/minAjax.js')
 
-let runCommand = function(cmd, s, e) {
-    $.ajax({
-        url : '/os/runCommand',
-        type : 'POST',
-        data : {
-          command : cmd
-        },
-        done : function(data){
-            s(data);
-        },
-        problem : function (error) {
-            e(error);
-        }
-    
-    });
+const runCommand = function (cmd, s, e) {
+  $.ajax({
+    url: '/os/runCommand',
+    type: 'POST',
+    data: {
+      command: cmd
+    },
+    done: function (data) {
+      s(data)
+    },
+    problem: function (error) {
+      e(error)
+    }
 
-};
+  })
+}
 
-let getEnvar = function(v, s, e) {
-    $.ajax({
-        url : '/os/getEnvar',
-        type : 'POST',
-        data : {
-          name : v
-        },
-        done : function(data){
-            s(data);
-        },
-        problem : function(error) {
-            e(error);
-        }
-    
-    });
+const getEnvar = function (v, s, e) {
+  $.ajax({
+    url: '/os/getEnvar',
+    type: 'POST',
+    data: {
+      name: v
+    },
+    done: function (data) {
+      s(data)
+    },
+    problem: function (error) {
+      e(error)
+    }
 
-};
+  })
+}
 
+const dialogOpen = function (t, s, e) {
+  $.ajax({
+    url: '/os/dialogOpen',
+    type: 'POST',
+    data: {
+      title: t
+    },
+    done: function (data) {
+      s(data)
+    },
+    problem: function (error) {
+      e(error)
+    }
 
-let dialogOpen = function(t, s, e) {
-    $.ajax({
-        url : '/os/dialogOpen',
-        type : 'POST',
-        data : {
-          title : t
-        },
-        done : function(data){
-            s(data);
-        },
-        problem : function(error) {
-            e(error);
-        }
-    
-    });
+  })
+}
 
-};
+const dialogSave = function (t, s, e) {
+  $.ajax({
+    url: '/os/dialogSave',
+    type: 'POST',
+    data: {
+      title: t
+    },
+    done: function (data) {
+      s(data)
+    },
+    problem: function (error) {
+      e(error)
+    }
 
-
-let dialogSave = function(t, s, e) {
-    $.ajax({
-        url : '/os/dialogSave',
-        type : 'POST',
-        data : {
-          title : t
-        },
-        done : function(data){
-            s(data);
-        },
-        problem : function(error) {
-            e(error);
-        }
-    
-    });
-
-};
-
+  })
+}
 
 module.exports = {
-    runCommand : runCommand,
-    getEnvar : getEnvar,
-    dialogOpen : dialogOpen,
-    dialogSave : dialogSave
+  runCommand: runCommand,
+  getEnvar: getEnvar,
+  dialogOpen: dialogOpen,
+  dialogSave: dialogSave
 }

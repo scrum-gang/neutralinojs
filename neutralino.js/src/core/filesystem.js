@@ -20,126 +20,116 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-let $ = require('../lib/minAjax.js');
+const $ = require('../lib/minAjax.js')
 
-let createDirectory = function (dirName, s, e) {
-    $.ajax({
-        url : '/filesystem/createDirectory',
-        type : 'POST',
-        data : {
-          dir : dirName
-        },
-        done : function(data){
-            s(data);
-        },
-        problem : function (error) {
-            e(error);
-        }
-    
-    });
+const createDirectory = function (dirName, s, e) {
+  $.ajax({
+    url: '/filesystem/createDirectory',
+    type: 'POST',
+    data: {
+      dir: dirName
+    },
+    done: function (data) {
+      s(data)
+    },
+    problem: function (error) {
+      e(error)
+    }
 
-};
+  })
+}
 
+const removeDirectory = function (dirName, s, e) {
+  $.ajax({
+    url: '/filesystem/removeDirectory',
+    type: 'POST',
+    data: {
+      dir: dirName
+    },
+    done: function (data) {
+      s(data)
+    },
+    problem: function (error) {
+      e(error)
+    }
 
-let removeDirectory = function (dirName, s, e) {
-    $.ajax({
-        url : '/filesystem/removeDirectory',
-        type : 'POST',
-        data : {
-          dir : dirName
-        },
-        done : function(data){
-            s(data);
-        },
-        problem : function(error) {
-            e(error);
-        }
-    
-    });
+  })
+}
 
-};
+const writeFile = function (fileName, content, s, e) {
+  $.ajax({
+    url: '/filesystem/writeFile',
+    type: 'POST',
+    data: {
+      filename: fileName,
+      content: content
+    },
+    done: function (data) {
+      s(data)
+    },
+    problem: function (error) {
+      e(error)
+    }
 
-let writeFile = function (fileName, content, s, e) {
-    $.ajax({
-        url : '/filesystem/writeFile',
-        type : 'POST',
-        data : {
-          filename : fileName,
-          content : content
-        },
-        done : function(data){
-            s(data);
-        },
-        problem : function(error) {
-            e(error);
-        }
-    
-    });
+  })
+}
 
-};
+const readFile = function (fileName, s, e) {
+  $.ajax({
+    url: '/filesystem/readFile',
+    type: 'POST',
+    data: {
+      filename: fileName
+    },
+    done: function (data) {
+      s(data)
+    },
+    problem: function (error) {
+      e(error)
+    }
 
-let readFile = function (fileName, s, e) {
-    $.ajax({
-        url : '/filesystem/readFile',
-        type : 'POST',
-        data : {
-          filename : fileName
-        },
-        done : function(data){
-            s(data);
-        },
-        problem : function(error) {
-            e(error);
-        }
-    
-    });
+  })
+}
 
-};
+const removeFile = function (fileName, s, e) {
+  $.ajax({
+    url: '/filesystem/removeFile',
+    type: 'POST',
+    data: {
+      filename: fileName
+    },
+    done: function (data) {
+      s(data)
+    },
+    problem: function (error) {
+      e(error)
+    }
 
+  })
+}
 
-let removeFile = function (fileName, s, e) {
-    $.ajax({
-        url : '/filesystem/removeFile',
-        type : 'POST',
-        data : {
-          filename : fileName
-        },
-        done : function(data){
-            s(data);
-        },
-        problem : function(error) {
-            e(error);
-        }
-    
-    });
+const readDirectory = function (path, s, e) {
+  $.ajax({
+    url: '/filesystem/readDirectory',
+    type: 'POST',
+    data: {
+      path: path
+    },
+    done: function (data) {
+      s(data)
+    },
+    problem: function (error) {
+      e(error)
+    }
 
-};
-
-
-let readDirectory = function (path, s, e) {
-    $.ajax({
-        url : '/filesystem/readDirectory',
-        type : 'POST',
-        data : {
-          path : path
-        },
-        done : function(data){
-            s(data);
-        },
-        problem : function(error) {
-            e(error);
-        }
-    
-    });
-
-};
-
+  })
+}
 
 module.exports = {
-    createDirectory : createDirectory,
-    removeDirectory : removeDirectory,
-    writeFile : writeFile,
-    readFile : readFile,
-    removeFile : removeFile,
-    readDirectory : readDirectory
+  createDirectory: createDirectory,
+  removeDirectory: removeDirectory,
+  writeFile: writeFile,
+  readFile: readFile,
+  removeFile: removeFile,
+  readDirectory: readDirectory
 }

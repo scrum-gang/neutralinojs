@@ -20,25 +20,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-let $ = require('../lib/minAjax.js');
+const $ = require('../lib/minAjax.js')
 
-let ping = {
+const ping = {
 
-    start : function (s, e) {
-        setInterval(function () {
-            $.ajax({
-                url : '/ping',
-                type : 'GET',
-                success : function(data){
-                    if(s) s();
-                },
-                errorCallback : function () {
-                    if(e) e();
-                }
-            
-            });
-        }, 5000);
-    }
+  start: function (s, e) {
+    setInterval(function () {
+      $.ajax({
+        url: '/ping',
+        type: 'GET',
+        success: function (data) {
+          if (s) s()
+        },
+        errorCallback: function () {
+          if (e) e()
+        }
+
+      })
+    }, 5000)
+  }
 }
 
-module.exports = ping;
+module.exports = ping
