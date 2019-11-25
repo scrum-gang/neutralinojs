@@ -16,6 +16,7 @@ script:
   - cd neutralino.js
   - npm install
   - npm test
+  - npm run lint
   - mkdir build
   - docker run -v `pwd`/build:/neutralinojs/build neutralinojs:test-build
   - docker ps -a
