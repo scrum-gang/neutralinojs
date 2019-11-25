@@ -20,24 +20,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-let $ = require('../lib/minAjax.js');
+const $ = require('../lib/minAjax.js')
 
-let getSettings = function (s,e) {
-    $.ajax({
-        url : '/settings.json',
-        type : 'GET',
-        done : function(data){
-            s(data);
-        },
-        problem : function (error) {
-            e(error);
-        }
-    
-    });
+const getSettings = function (s, e) {
+  $.ajax({
+    url: '/settings.json',
+    type: 'GET',
+    done: function (data) {
+      s(data)
+    },
+    problem: function (error) {
+      e(error)
+    }
 
-};
-
+  })
+}
 
 module.exports = {
-    getSettings : getSettings
+  getSettings: getSettings
 }

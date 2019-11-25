@@ -20,65 +20,58 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
- let authbasic = require('../auth/authbasic');
+const authbasic = require('../auth/authbasic')
 
- function initXMLhttp() {
-    var xmlhttp;
-    if (window.XMLHttpRequest) {
-        //code for IE7,firefox chrome and above
-        xmlhttp = new XMLHttpRequest();
-    } else {
-        //code for Internet Explorer
-        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
+function initXMLhttp () {
+  var xmlhttp
+  if (window.XMLHttpRequest) {
+    // code for IE7,firefox chrome and above
+    xmlhttp = new XMLHttpRequest()
+  } else {
+    // code for Internet Explorer
+    xmlhttp = new ActiveXObject('Microsoft.XMLHTTP')
+  }
 
-    return xmlhttp;
+  return xmlhttp
 }
 
-function ajax(config) {
+function ajax (config) {
+  if (!config.method) {
+    config.method = true
+  }
 
-    if (!config.method) {
-        config.method = true;
+  var xmlhttp = initXMLhttp()
+
+  xmlhttp.onreadystatechange = function () {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+      if (config.done) {
+        config.done(JSON.parse(xmlhttp.responseText))
+      }
+    } else if (xmlhttp.readyState == 4) {
+      if (config.problem) {
+        config.problem({
+          message: 'An error occured while connecting with Neutralino server!'
+        })
+      }
     }
+  }
 
-    var xmlhttp = initXMLhttp();
+  if (typeof config.data !== 'undefined') { sendString = JSON.stringify(config.data) }
 
-    xmlhttp.onreadystatechange = function() {
+  if (config.type == 'GET') {
+    xmlhttp.open('GET', config.url, config.method)
+    xmlhttp.setRequestHeader('Authorization', 'Basic ' + authbasic.getToken())
+    xmlhttp.send()
+  }
 
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            if (config.done) {
-                config.done(JSON.parse(xmlhttp.responseText));
-            }
-        } 
-        else if(xmlhttp.readyState == 4) {
-            if(config.problem){
-                config.problem({
-                    message : "An error occured while connecting with Neutralino server!"
-                });
-            }
-        }
-    }
-    
-   if(typeof config.data != 'undefined')
-        sendString = JSON.stringify(config.data);
-
-    if (config.type == "GET") {
-        xmlhttp.open("GET", config.url , config.method);
-        xmlhttp.setRequestHeader("Authorization", "Basic " + authbasic.getToken());
-        xmlhttp.send();
-    }
-    
-    if (config.type == "POST") {
-        xmlhttp.open("POST", config.url, config.method);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.setRequestHeader("Authorization", "Basic " + authbasic.getToken());
-        xmlhttp.send(sendString);
-    }
-
-
-
+  if (config.type == 'POST') {
+    xmlhttp.open('POST', config.url, config.method)
+    xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+    xmlhttp.setRequestHeader('Authorization', 'Basic ' + authbasic.getToken())
+    xmlhttp.send(sendString)
+  }
 }
 
 module.exports = {
-    ajax : ajax
+  ajax: ajax
 }

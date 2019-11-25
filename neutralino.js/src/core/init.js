@@ -20,21 +20,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-let ping = require('../ping/ping');
+const ping = require('../ping/ping')
 
-module.exports =  function (options) {
-    let pingSuccessCallback = null;
-    let pingFailCallback = null;
+module.exports = function (options) {
+  let pingSuccessCallback = null
+  let pingFailCallback = null
 
-    if(options.load) {
-        options.load();
-    }
-    if(options.pingSuccessCallback) {
-        pingSuccessCallback = options.pingSuccessCallback;
-    }
-    if(options.pingFailCallback) {
-        pingFailCallback = options.pingFailCallback;
-    }
-    if(NL_MODE == 'browser')
-        ping.start(pingSuccessCallback, pingFailCallback);
+  if (options.load) {
+    options.load()
+  }
+  if (options.pingSuccessCallback) {
+    pingSuccessCallback = options.pingSuccessCallback
+  }
+  if (options.pingFailCallback) {
+    pingFailCallback = options.pingFailCallback
+  }
+  if (NL_MODE == 'browser') { ping.start(pingSuccessCallback, pingFailCallback) }
 }

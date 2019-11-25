@@ -20,47 +20,44 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-let $ = require('../lib/minAjax.js');
+const $ = require('../lib/minAjax.js')
 
-let putData = function (data, s, e) {
-    $.ajax({
-        url : '/storage/putData',
-        type : 'POST',
-        data : {
-          bucket : data.bucket,
-          content : data.content
-        },
-        done : function(data){
-            s(data);
-        },
-        problem : function (error) {
-            e(error);
-        }
-    
-    });
+const putData = function (data, s, e) {
+  $.ajax({
+    url: '/storage/putData',
+    type: 'POST',
+    data: {
+      bucket: data.bucket,
+      content: data.content
+    },
+    done: function (data) {
+      s(data)
+    },
+    problem: function (error) {
+      e(error)
+    }
 
-};
+  })
+}
 
-let getData = function (bucket, s, e) {
-    $.ajax({
-        url : '/storage/getData',
-        type : 'POST',
-        data : {
-          bucket : bucket
-        },
-        done : function(data){
-            s(JSON.parse(data.content));
-        },
-        problem : function(error) {
-            e(error);
-        }
-    
-    });
+const getData = function (bucket, s, e) {
+  $.ajax({
+    url: '/storage/getData',
+    type: 'POST',
+    data: {
+      bucket: bucket
+    },
+    done: function (data) {
+      s(JSON.parse(data.content))
+    },
+    problem: function (error) {
+      e(error)
+    }
 
-};
-
+  })
+}
 
 module.exports = {
-    putData : putData,
-    getData : getData
+  putData: putData,
+  getData: getData
 }
