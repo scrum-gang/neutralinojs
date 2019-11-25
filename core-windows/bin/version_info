@@ -15,8 +15,8 @@ BLOCK "StringFileInfo"
 		VALUE "CompanyName", "Neutralino Team"
 		VALUE "LegalCopyright", "\xA9 Neutralino"
 		VALUE "ProductName", "Neutralinojs Framework"
-		VALUE "FileVersion", "1.21.0"
-		VALUE "ProductVersion", "1.21.0"
+		VALUE "FileVersion", "1.22.0"
+		VALUE "ProductVersion", "1.22.0"
 	}
 }
 
